@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="378.905" height="299.635">
+  <g fill="none" stroke="#000" stroke-linecap="round" stroke-width="37.795">
+    <path stroke-linejoin="round" d="M19.167 280.49h100" paint-order="fill markers stroke"/>
+    <path d="M259.738 280.49h100" paint-order="fill markers stroke"/>
+    <path d="M70.847 280.49L191.016 19.145" opacity=".98" paint-order="markers stroke fill"/>
+    <path d="M303.016 280.49l-112-261.345" opacity=".98" paint-order="stroke fill markers"/>
+  </g>
+</svg>

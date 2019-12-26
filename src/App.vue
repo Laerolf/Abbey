@@ -1,29 +1,47 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+  <div>
+    <notifications position="top right" classes="notification" group="notifications" />
     <router-view />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style>
+.text-abbey-light {
+  color: rgb(250, 235, 215);
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+.text-abbey-dark {
+  color: #b09348;
+}
+
+.bg-abbey-light {
+  background-color: rgb(250, 235, 215);
+}
+
+.bg-abbey-dark {
+  background-color: #b09348;
+}
+
+.bg-abbey-darker {
+  background-color: #5e4f27;
+}
+
+.btn-abbey {
+  background-color: #b09348;
+  color: rgb(250, 235, 215);
+}
+
+.btn-abbey:hover,
+.btn-abbey:active,
+.btn-abbey:focus {
+  background-color: rgb(250, 235, 215);
+  color: #b09348;
+  box-shadow: none;
+}
+
+.btn-abbey.router-link-active {
+  background-color: rgb(250, 235, 215);
+  color: #b09348;
+  box-shadow: none;
 }
 </style>

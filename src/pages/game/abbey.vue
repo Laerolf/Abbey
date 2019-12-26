@@ -1,0 +1,80 @@
+<template>
+  <div class="card">
+    <div class="card-header">
+      <p class="card-header-title">Abbey</p>
+    </div>
+    <div class="card-content">
+      <div class="content">
+        <p>Here you can manage your monks.</p>
+
+        <ul>
+          <li>Previous chore: {{ previousChore.name }}</li>
+          <li>Current chore: {{ currentChore.name }}</li>
+          <li>Next chore: {{ nextChore.name }}</li>
+        </ul>
+
+        <p>
+          There are currently {{ totalAmtOfMonks }} monks in your abbey.<br />
+          {{ occupiedMonks }} monks are busy.
+        </p>
+
+        <department
+          v-for="department in departments"
+          :key="department.id"
+          :department="department"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import department from "@/components/abbey/department";
+import { fromAbbey } from "@/store/modules/abbey";
+
+export default {
+  name: "Abbey",
+  components: { department },
+  computed: {
+    ...fromAbbey.mapState(["departments", "totalAmtOfMonks", "departments", "schedule"]),
+    ...fromAbbey.mapGetters(["getChores"]),
+    occupiedMonks: function() {
+      let amountOfOccupiedMonks = 0;
+
+      for (let department in this.departments) {
+        if (this.departments.hasOwnProperty(department)) {
+          let selectedDepartment = this.departments[department];
+          amountOfOccupiedMonks += selectedDepartment.monks;
+        }
+      }
+
+      return amountOfOccupiedMonks;
+    },
+    availableMonks: function() {
+      return this.totalAmtMonks - this.occupiedMonks;
+    },
+    previousChore: function() {
+      const currentChoreIndex = this.getChores.findIndex(
+        chore => chore.time === this.currentChore.time
+      );
+
+      return currentChoreIndex === 0
+        ? Object.values(this.getChores)[this.getChores.length - 1]
+        : Object.values(this.getChores)[currentChoreIndex - 1];
+    },
+    currentChore() {
+      return this.schedule.currentChore;
+    },
+    nextChore: function() {
+      const currentChoreIndex = this.getChores.findIndex(
+        chore => chore.time === this.currentChore.time
+      );
+
+      return currentChoreIndex === this.getChores.length - 1
+        ? Object.values(this.getChores)[0]
+        : Object.values(this.getChores)[currentChoreIndex + 1];
+    }
+  }
+};
+</script>
+
+<style scoped></style>
