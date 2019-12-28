@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Brewery</p>
+      <p class="card-header-title">{{ $t("game.brewery.title") }}</p>
     </div>
     <div class="card-content">
       <SubNav :tabs="tabs" />
@@ -32,12 +32,12 @@ export default {
         {
           to: "/game/brewery/book-of-recipes",
           icon: "book-open",
-          name: "Book of recipes"
+          name: this.$t("game.brewery.navigation.bookOfRecipes")
         },
         {
           to: "/game/brewery/brew",
           icon: "bolt",
-          name: "Brew"
+          name: this.$t("game.brewery.navigation.brew")
         }
       ],
       loading: true

@@ -2,9 +2,9 @@
   <div :abbey-token="`abbey-field-${field.number}`" class="field card">
     <div class="card-header" :abbey-token="`abbey-field-header-${field.number}`">
       <p v-if="hasResource" class="card-header-title">
-        {{ fieldResource.name | capitalize }} Field
+        {{ $t("game.jobs.field.title", { resource: fieldResource.name | capitalize }) }}
       </p>
-      <p v-else class="card-header-title">Plain field</p>
+      <p v-else class="card-header-title">{{ $t("game.jobs.field.noResourceTitle") }}</p>
     </div>
     <div class="card-content" :abbey-token="`abbey-field-content-${field.number}`">
       <div class="content" v-if="hasResource">
@@ -29,7 +29,7 @@
           :abbey-token="`abbey-field-content-plain-availableSeeds-${field.number}`"
           v-if="availableSeeds.length"
         >
-          <p>Choose seeds to sow:</p>
+          <p>{{ $t("game.jobs.field.seedToSow") }}</p>
 
           <div class="field">
             <div class="control">
@@ -50,7 +50,7 @@
           :abbey-token="`abbey-field-content-plain-availableSeeds-undefined-${field.number}`"
           v-else
         >
-          <p>You don't have any seeds in your inventory.</p>
+          <p>{{ $t("game.jobs.field.noSeeds") }}</p>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
           class="title is-5"
           :abbey-token="`abbey-field-content-installed-options-title-${field.number}`"
         >
-          Configuration
+          {{ $t("game.jobs.field.configuration.title") }}
         </h5>
         <ul :abbey-token="`abbey-field-content-installed-options-details-${field.number}`">
           <li
@@ -72,7 +72,8 @@
               `abbey-field-content-installed-options-details-initialValue-${field.number}`
             "
           >
-            Initial value:<font-awesome-icon icon="stop-circle" class="text-gold" />
+            {{ $t("game.jobs.field.configuration.initialValue") }}
+            <font-awesome-icon icon="stop-circle" class="text-gold" />
             {{ field.fieldValue.initial }}
           </li>
           <li
@@ -80,7 +81,8 @@
               `abbey-field-content-installed-options-details-currentValue-${field.number}`
             "
           >
-            Current value:<font-awesome-icon icon="stop-circle" class="text-gold" />
+            {{ $t("game.jobs.field.configuration.currentValue")
+            }}<font-awesome-icon icon="stop-circle" class="text-gold" />
             {{ field.fieldValue.current }}
           </li>
         </ul>
@@ -97,7 +99,7 @@
               "
               @click="sell"
             >
-              Sell
+              {{ $t("game.jobs.field.configuration.actions.sellButton") }}
             </button>
           </p>
           <p class="control">
@@ -108,7 +110,7 @@
               class="button is-danger"
               @click="reset"
             >
-              Reset
+              {{ $t("game.jobs.field.configuration.actions.resetButton") }}
             </button>
           </p>
         </div>
@@ -125,7 +127,7 @@
             "
             @click="install"
           >
-            Install
+            {{ $t("game.jobs.field.actions.installButton") }}
           </button>
         </span>
       </div>
@@ -136,7 +138,7 @@
             class="button is-primary"
             @click="grow"
           >
-            Grow
+            {{ $t("game.jobs.field.actions.growButton") }}
           </button>
         </span>
       </div>
@@ -147,7 +149,7 @@
             class="button is-success"
             @click="harvest"
           >
-            Harvest
+            {{ $t("game.jobs.field.actions.harvestButton") }}
           </button>
         </span>
       </div>
@@ -159,7 +161,7 @@
             class="button is-info"
             @click="showOptions"
           >
-            Options
+            {{ $t("game.jobs.field.actions.optionsButton") }}
           </button>
         </span>
       </div>

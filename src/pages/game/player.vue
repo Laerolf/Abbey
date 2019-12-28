@@ -5,21 +5,29 @@
     </header>
     <div class="card-content">
       <div class="content">
-        <p>Here you can find all we know from you.</p>
+        <p>{{ $t("game.player.content.title") }}</p>
 
-        <h5>User information</h5>
-        <p>Your username is {{ user.username }}.</p>
+        <h5>{{ $t("game.player.content.userInformation.title") }}</h5>
+        <p>{{ $t("game.player.content.userInformation.username", { username: user.username }) }}</p>
         <p>
-          The last time you logged in was
-          {{ user.lastLoginDate | formatDateDayNameMonthYearWithTime }}.
+          {{
+            $t("game.player.content.userInformation.lastLoginDate", {
+              loginDate: user.lastLoginDate | formatDateDayNameMonthYearWithTime
+            })
+          }}
         </p>
         <p>
-          You created your account on
-          {{ user.registrationDate | formatDateDayNameMonthYear }}.
+          {{
+            $t("game.player.content.userInformation.registrationDate", {
+              registrationDate: user.registrationDate | formatDateDayNameMonthYearWithTime
+            })
+          }}
         </p>
 
-        <h5>Player information</h5>
-        <p>The name of your character is {{ player.name }}.</p>
+        <h5>{{ $t("game.player.content.playerInformation.title") }}</h5>
+        <p>
+          {{ $t("game.player.content.playerInformation.name", { name: player.name }) }}
+        </p>
 
         <p>
           So far, you had {{ player.counter.fields | zeroToNo }}
@@ -43,6 +51,12 @@ export default {
     ...fromUser.mapState({
       user: state => state
     })
+  },
+  async created() {
+    await this.loadUser();
+  },
+  methods: {
+    ...fromUser.mapActions(["loadUser"])
   }
 };
 </script>

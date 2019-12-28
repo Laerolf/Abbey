@@ -24,7 +24,7 @@
               class="button is-info"
               @click="fetch"
             >
-              Fetch
+              {{ $t("game.jobs.facility.actions.fetchButton") }}
             </button>
           </div>
           <div v-show="collectable || !hasEmptyStorage" class="control">
@@ -33,7 +33,7 @@
               class="button is-success"
               @click="collect"
             >
-              Collect
+              {{ $t("game.jobs.facility.actions.collectButton") }}
             </button>
           </div>
           <div class="control">
@@ -43,7 +43,7 @@
               :class="{ 'is-outlined': showOptions }"
               @click="toggleOptions"
             >
-              Options
+              {{ $t("game.jobs.facility.actions.optionsButton") }}
             </button>
           </div>
           <div class="control">
@@ -57,7 +57,7 @@
               }"
               @click="toggleStorage"
             >
-              Storage
+              {{ $t("game.jobs.facility.actions.storageButton") }}
               <span v-if="hasFullStorage" class="icon is-medium">
                 <font-awesome-icon icon="exclamation" />
               </span>

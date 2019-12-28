@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Jobs</p>
+      <p class="card-header-title">{{ $t("game.jobs.title") }}</p>
     </div>
     <div class="card-content">
       <SubNav :tabs="tabs" />
@@ -24,12 +24,12 @@ export default {
         {
           to: "/game/jobs/fields",
           icon: "seedling",
-          name: "Fields"
+          name: this.$t("game.jobs.navigation.fields")
         },
         {
           to: "/game/jobs/facilities",
           icon: "tree",
-          name: "Facilities"
+          name: this.$t("game.jobs.navigation.facilities")
         }
       ]
     };

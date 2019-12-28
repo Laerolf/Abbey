@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Workshop</p>
+      <p class="card-header-title">{{ $t("game.workshop.title") }}</p>
     </div>
     <div class="card-content">
       <sub-nav :tabs="tabs" />
@@ -26,12 +26,7 @@ export default {
         {
           to: "/game/workshop/workbench",
           icon: "toolbox",
-          name: "Workbench"
-        },
-        {
-          to: "/game/workshop/furnace",
-          icon: "fire-alt",
-          name: "Furnace"
+          name: this.$t("game.workshop.navigation.workbench")
         }
       ],
       loading: true

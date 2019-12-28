@@ -1,12 +1,12 @@
 <template>
   <div class="card">
     <header class="card-header">
-      <p class="card-header-title">Storybook</p>
+      <p class="card-header-title">{{ $t("game.storybook.title") }}</p>
     </header>
     <div class="card-content">
       <div v-if="!loading" class="content">
         <div>
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(1)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(1)}`)" />
 
           <button
             :disabled="!!boughtBeer"
@@ -14,7 +14,7 @@
             class="button is-success"
             @click="setAnswer('boughtBeer', true)"
           >
-            Buy a beer
+            {{ $t("game.storybook.actions.buyBeerButton") }}
           </button>
 
           <button
@@ -23,12 +23,12 @@
             class="button is-danger"
             @click="setAnswer('boughtBeer', false)"
           >
-            Don't give a beer
+            {{ $t("game.storybook.actions.noBuyBeerButton") }}
           </button>
         </div>
 
         <div v-if="!!boughtBeer">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(2)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(2)}`)" />
 
           <button
             :disabled="!!listenedToStory"
@@ -36,7 +36,7 @@
             class="button is-success"
             @click="setAnswer('listenedToStory', true)"
           >
-            Yes
+            {{ $t("game.storybook.actions.listenToStoryButton") }}
           </button>
           <button
             :disabled="!!listenedToStory"
@@ -44,21 +44,21 @@
             class="button is-danger"
             @click="setAnswer('listenedToStory', false)"
           >
-            No
+            {{ $t("game.storybook.actions.noListenToStoryButton") }}
           </button>
         </div>
 
         <div v-if="!!listenedToStory">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(3)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(3)}`)" />
         </div>
 
         <div v-if="!!listenedToStory">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(4)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(4)}`)" />
 
           <form @submit.prevent="setAnswer('playerName', newPlayerName)">
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">My name is</label>
+                <label class="label">{{ $t("game.storybook.nameFieldLabel") }}</label>
               </div>
               <div class="field-body">
                 <div class="field">
@@ -87,7 +87,7 @@
         <div v-if="hasPlayerName">
           <p
             v-html="
-              $t(`storyChapters.${getStoryChapterByChapterNumber(5)}`, {
+              $t(`game.story.storyChapters.${getStoryChapterByChapterNumber(5)}`, {
                 randomFact: randomFact,
                 playerName: playerName
               })
@@ -100,7 +100,7 @@
             class="button is-info"
             @click="setAnswer('gender', 'male')"
           >
-            Boy
+            {{ $t("game.storybook.actions.genderMaleButton") }}
           </button>
           <button
             :disabled="gender"
@@ -108,17 +108,17 @@
             class="button is-info"
             @click="setAnswer('gender', 'female')"
           >
-            Girl
+            {{ $t("game.storybook.actions.genderFemaleButton") }}
           </button>
         </div>
 
         <div v-if="!!gender">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(6)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(6)}`)" />
 
           <form @submit.prevent="setAnswer('placeName', newPlaceName)">
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">I would like to be in</label>
+                <label class="label">{{ $t("game.storybook.placeFieldLabel") }}</label>
               </div>
               <div class="field-body">
                 <div class="field">
@@ -146,7 +146,7 @@
         <div v-if="hasPlaceName">
           <p
             v-html="
-              $t(`storyChapters.${getStoryChapterByChapterNumber(7)}`, {
+              $t(`game.story.storyChapters.${getStoryChapterByChapterNumber(7)}`, {
                 placeName: placeName,
                 fatherName: fatherName,
                 daugtherSon: getDaughterOrSon,
@@ -162,7 +162,7 @@
         <div v-if="hasPlaceName">
           <p
             v-html="
-              $t(`storyChapters.${getStoryChapterByChapterNumber(8)}`, {
+              $t(`game.story.storyChapters.${getStoryChapterByChapterNumber(8)}`, {
                 placeName: placeName,
                 fatherName: fatherName,
                 daugtherSon: getDaughterOrSon
@@ -172,14 +172,14 @@
         </div>
 
         <div v-if="hasPlaceName">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
           <button
             :disabled="likeStory !== null && likeStory !== undefined"
             :class="{ active: likeStory === true }"
             class="button is-success"
             @click="setAnswer('likeStory', true)"
           >
-            Yes
+            {{ $t("game.storybook.actions.likeStoryButton") }}
           </button>
           <button
             :disabled="likeStory !== null && likeStory !== undefined"
@@ -187,23 +187,23 @@
             class="button is-danger"
             @click="setAnswer('likeStory', false)"
           >
-            No
+            {{ $t("game.storybook.actions.noLikeStoryButton") }}
           </button>
 
           <div v-if="likeStory !== null && likeStory !== undefined">
-            <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
+            <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
           </div>
         </div>
 
         <div v-if="likeStory !== null && likeStory !== undefined">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(10)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(10)}`)" />
 
           <button
             :disabled="completedStory"
             class="button is-info"
             @click="setStoryCompleted(true)"
           >
-            Bye!
+            {{ $t("game.storybook.actions.endStoryButton") }}
           </button>
         </div>
       </div>
@@ -216,7 +216,6 @@
 <script>
 import { fromStory } from "@/store/modules/story";
 import { fromPlayer } from "@/store/modules/player";
-import { fromTranslations } from "../../store/modules/translations";
 
 export default {
   name: "Storybook",
@@ -230,7 +229,6 @@ export default {
     };
   },
   computed: {
-    ...fromTranslations.mapState(["en"]),
     ...fromStory.mapState([
       "storyAnswers",
       "completeStory",

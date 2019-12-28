@@ -1,11 +1,13 @@
 <template>
   <div class="card processor">
     <div class="card-header">
-      <p class="card-header-title">{{ breweryProcessor.name | capitalize }}</p>
+      <p class="card-header-title">
+        {{ $t(`game.brewery.breweryProcessors.${breweryProcessor.name}`) | capitalize }}
+      </p>
     </div>
     <div class="card-content">
       <div class="content">
-        <h5 class="title is-5">Input</h5>
+        <h5 class="title is-5">{{ $t("game.brewery.breweryProcessor.output.title") }}</h5>
         <ul>
           <li v-for="inputItem in inputResources" :key="inputItem.name">
             <font-awesome-icon
@@ -23,7 +25,7 @@
         </ul>
 
         <div>
-          <h5 class="title is-5">Output</h5>
+          <h5 class="title is-5">{{ $t("game.brewery.breweryProcessor.output.title") }}</h5>
           <ul>
             <li v-for="output in outputResources" :key="output.name">
               {{ output.quantity }} {{ output.name }}
@@ -43,9 +45,23 @@
         </div>
 
         <div v-if="gained">
-          <p>You got {{ outputResources[0].quantity }} {{ outputResources[0].name }}!</p>
+          <p>
+            {{
+              $t("game.brewery.breweryProcessor.gain.overviewMessage", {
+                outputQuantity: outputResources[0].quantity,
+                outputResource: outputResources[0].name
+              })
+            }}
+          </p>
           <ul>
-            <li>Regular gain: {{ outputResources[0].quantity }}</li>
+            <li>
+              {{
+                $t("game.brewery.breweryProcessor.gain.detailMessage", {
+                  outputQuantity: outputResources[0].quantity,
+                  outputResource: outputResources[0].name
+                })
+              }}
+            </li>
           </ul>
         </div>
 
@@ -55,10 +71,10 @@
           class="button is-info"
           @click="process"
         >
-          Process
+          {{ $t("game.brewery.buttons.process") }}
         </button>
         <button v-if="gainable" class="button is-success" @click="gain">
-          Gain
+          {{ $t("game.brewery.buttons.gain") }}
         </button>
         <button
           v-if="!inProgress && !gainable"
@@ -66,7 +82,7 @@
           class="button is-success"
           @click="automaticProcess"
         >
-          Auto
+          {{ $t("game.brewery.buttons.auto") }}
         </button>
       </div>
     </div>

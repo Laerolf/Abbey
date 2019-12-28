@@ -1,16 +1,22 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Brew</p>
+      <p class="card-header-title">{{ $t("game.brewery.brew.title") }}</p>
     </div>
     <div class="card-content">
       <div v-if="!loading" class="content">
-        <p v-if="brewMonks < 1">There are {{ brewMonks }} monks working here.<br /></p>
+        <p v-if="brewMonks < 1">{{ $t("game.brewery.brew.noBrewingMonksMessage") }}</p>
 
-        <p v-if="brewMonks >= 1" class="card-text">
-          There are {{ brewMonks }} monks working here.<br />
-          This results in a {{ monkBonus | percentize }} bonus.
-        </p>
+        <p
+          v-if="brewMonks >= 1"
+          class="card-text"
+          v-html="
+            $t('game.brewery.brew.brewingMonksMessage', {
+              monkAmount: brewMonks,
+              monkBonus: monkBonus | percentize
+            })
+          "
+        />
 
         <div v-if="selectedRecipe">
           <BreweryProcessor
@@ -19,13 +25,8 @@
             :brewery-processor="breweryProcessor"
           />
         </div>
-        <p v-if="!hasSelectedRecipe">
-          Select a recipe in the
-          <router-link to="/game/brewery/book-of-recipes" tag="a">Book of Recipes</router-link>
-          , your monks don't know what to brew yet!
-        </p>
-
-        <p v-if="!breweryProcessors">You don't have any equipment yet!</p>
+        <p v-if="!hasSelectedRecipe" v-html="$t('game.brewery.brew.noSelectedRecipeMessage')" />
+        <p v-if="!breweryProcessors" v-html="$t('game.brewery.brew.noEquipmentMessage')" />
       </div>
       <div v-else class="content">
         Loading ...

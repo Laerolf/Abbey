@@ -2,8 +2,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import { $notify } from "@/plugins/notify";
-
 import Default from "@/layouts/Default";
 import Game from "@/layouts/Game";
 
@@ -24,7 +22,6 @@ import Player from "@/pages/game/player";
 import Storybook from "@/pages/game/storybook";
 import Workshop from "@/pages/game/workshop";
 import Workbench from "@/pages/game/workshop/workbench";
-import Furnace from "@/pages/game/workshop/furnace";
 
 Vue.use(Router);
 
@@ -147,11 +144,6 @@ const router = new Router({
               name: "Workbench",
               path: "workbench",
               component: Workbench
-            },
-            {
-              name: "Furnace",
-              path: "furnace",
-              component: Furnace
             }
           ]
         }
