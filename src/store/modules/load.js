@@ -11,6 +11,9 @@ export const mutations = {
   loadFacilities: function(state, facilitiesInfo) {
     state.facilities = facilitiesInfo;
   },
+  loadProcessors: function(state, processorsInfo) {
+    state.processors = processorsInfo;
+  },
   loadBeers: function(state, beersInfo) {
     state.beers = beersInfo;
   },

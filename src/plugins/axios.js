@@ -8,7 +8,7 @@ export const $axios = axios.create({
 });
 
 export const $axiosUnauthenticated = axios.create({
-  baseURL: "http://localhost:8000/",
+  baseURL: "http://localhost:8000/api/",
   timeout: 10000
 });
 

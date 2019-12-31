@@ -7,7 +7,7 @@
     </div>
     <div class="card-content">
       <div class="content">
-        <h5 class="title is-5">{{ $t("game.brewery.breweryProcessor.output.title") }}</h5>
+        <h5 class="title is-5">{{ $t("game.brewery.breweryProcessor.input.title") }}</h5>
         <ul>
           <li v-for="inputItem in inputResources" :key="inputItem.name">
             <font-awesome-icon
@@ -65,25 +65,33 @@
           </ul>
         </div>
 
-        <button
-          v-if="!inProgress && !gainable"
-          :disabled="!processable"
-          class="button is-info"
-          @click="process"
-        >
-          {{ $t("game.brewery.buttons.process") }}
-        </button>
-        <button v-if="gainable" class="button is-success" @click="gain">
-          {{ $t("game.brewery.buttons.gain") }}
-        </button>
-        <button
-          v-if="!inProgress && !gainable"
-          :disabled="!processable"
-          class="button is-success"
-          @click="automaticProcess"
-        >
-          {{ $t("game.brewery.buttons.auto") }}
-        </button>
+        <div class="field is-grouped">
+          <p class="control">
+            <button
+              v-if="!inProgress && !gainable"
+              :disabled="!processable"
+              class="button is-info"
+              @click="process"
+            >
+              {{ $t("game.brewery.breweryProcessor.buttons.process") }}
+            </button>
+          </p>
+          <p class="control">
+            <button v-if="gainable" class="button is-success" @click="gain">
+              {{ $t("game.brewery.breweryProcessor.buttons.gain") }}
+            </button>
+          </p>
+          <p class="control">
+            <button
+              v-if="!inProgress && !gainable"
+              :disabled="!processable"
+              class="button is-success"
+              @click="automaticProcess"
+            >
+              {{ $t("game.brewery.breweryProcessor.buttons.auto") }}
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   </div>

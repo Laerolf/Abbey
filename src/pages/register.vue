@@ -90,7 +90,7 @@ export default {
         password: this.password
       };
 
-      const response = await this.$axios.post("http://localhost:8000/api/register", registerInfo);
+      const response = await this.$axiosUnauthenticated.post("register", registerInfo);
 
       const { successful, message } = response.data;
 

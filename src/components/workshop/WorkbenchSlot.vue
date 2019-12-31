@@ -4,7 +4,7 @@
       <div class="columns is-vbottom">
         <div class="column">
           <div class="field">
-            <label class="label">{{ $t("game.workshop.resource") }}</label>
+            <label class="label">{{ $t("game.workshop.workbenchSlot.resource") }}</label>
             <div class="control select is-fullwidth">
               <select v-model="resource">
                 <option v-for="{ label, value } in items" :key="value" :value="value">
@@ -16,7 +16,7 @@
         </div>
         <div class="column is-4">
           <div class="field">
-            <label class="label">{{ $t("game.workshop.amount") }}</label>
+            <label class="label">{{ $t("game.workshop.workbenchSlot.amount") }}</label>
             <div class="control">
               <input
                 :disabled="!hasResource"

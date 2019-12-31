@@ -13,6 +13,7 @@ import Abbey from "@/pages/game/abbey";
 import Jobs from "@/pages/game/jobs";
 import Fields from "@/pages/game/jobs/fields";
 import Facilities from "@/pages/game/jobs/facilities";
+import Processors from "@/pages/game/jobs/processors";
 import Marketplace from "@/pages/game/marketplace";
 import Vendors from "@/pages/game/marketplace/vendors";
 import Brewery from "@/pages/game/brewery";
@@ -94,6 +95,11 @@ const router = new Router({
               name: "Facilities",
               path: "facilities",
               component: Facilities
+            },
+            {
+              name: "Processors",
+              path: "processors",
+              component: Processors
             }
           ]
         },

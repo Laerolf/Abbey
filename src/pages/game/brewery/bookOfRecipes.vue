@@ -48,7 +48,7 @@
                 v-html="
                   $t('game.brewery.bookOfRecipes.recipe.discoveredMessage', {
                     discoverer: selectedBeer.discoverer,
-                    discoverDate: selectedBeer.discoverDate | formatBeerDiscoveryDate
+                    discoverDate: selectedBeer.discoverDate
                   })
                 "
               />
@@ -77,7 +77,7 @@
                 <li
                   v-html="
                     $t('game.brewery.bookOfRecipes.recipe.alcoholLevel', {
-                      alcoholLevel: selectedBeer.alcoholLevel | percentize
+                      alcoholLevel: selectedBeer.alcoholLevel
                     })
                   "
                 />

@@ -4,6 +4,7 @@ import abbey from "./modules/abbey";
 import brewery from "./modules/brewery";
 import breweryProcessors from "./modules/breweryProcessors";
 import facilities from "./modules/facilities";
+import processors from "./modules/processors";
 import fields from "./modules/fields";
 import player from "./modules/player";
 import stock from "./modules/stock";
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     brewery: brewery,
     breweryProcessors: breweryProcessors,
     facilities: facilities,
+    processors: processors,
     fields: fields,
     player: player,
     stock: stock,

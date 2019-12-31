@@ -2,7 +2,7 @@
   <div :abbey-token="`abbey-field-${field.number}`" class="field card">
     <div class="card-header" :abbey-token="`abbey-field-header-${field.number}`">
       <p v-if="hasResource" class="card-header-title">
-        {{ $t("game.jobs.field.title", { resource: fieldResource.name | capitalize }) }}
+        {{ $t("game.jobs.field.title", { resource: fieldResource.name }) }}
       </p>
       <p v-else class="card-header-title">{{ $t("game.jobs.field.noResourceTitle") }}</p>
     </div>
