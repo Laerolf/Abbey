@@ -45,10 +45,8 @@ import { fromBreweryProcessors } from "@/store/modules/breweryProcessors";
 export default {
   name: "Brew",
   components: { BreweryProcessor },
-  data() {
-    return {
-      loading: false
-    };
+  props: {
+    loading: { type: Boolean, default: false }
   },
   computed: {
     ...fromBrewery.mapState(["selectedRecipe"]),
@@ -64,13 +62,6 @@ export default {
     hasSelectedRecipe() {
       return !!this.selectedRecipe;
     }
-  },
-  async created() {
-    await this.loadBreweryProcessors();
-    this.loading = false;
-  },
-  methods: {
-    ...fromBreweryProcessors.mapActions(["loadBreweryProcessors"])
   }
 };
 </script>

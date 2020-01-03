@@ -20,7 +20,7 @@
               icon="check"
               class="has-text-success"
             />
-            {{ inputItem.quantity }} {{ inputItem.name }}
+            {{ inputItem.quantity }} {{ inputItem.resource.name }}
           </li>
         </ul>
 
@@ -28,28 +28,25 @@
           <h5 class="title is-5">{{ $t("game.brewery.breweryProcessor.output.title") }}</h5>
           <ul>
             <li v-for="output in outputResources" :key="output.name">
-              {{ output.quantity }} {{ output.name }}
+              {{ output.quantity }} {{ output.resource.name }}
             </li>
           </ul>
         </div>
 
-        <div class="progress">
-          <div
-            :style="{ width: progress + '%' }"
-            :aria-valuenow="progress"
-            :aria-valuemin="minProgress"
-            :aria-valuemax="maxProgress"
-            class="progress-bar bg-success"
-            role="progressbar"
-          />
-        </div>
+        <progress
+          :abbey-token="`abbey-facility-content-progress-${breweryProcessor.name}`"
+          :value="progress"
+          :min="minProgress"
+          :max="maxProgress"
+          class="progress is-info"
+        />
 
         <div v-if="gained">
           <p>
             {{
               $t("game.brewery.breweryProcessor.gain.overviewMessage", {
                 outputQuantity: outputResources[0].quantity,
-                outputResource: outputResources[0].name
+                outputResource: outputResources[0].resource.name
               })
             }}
           </p>
@@ -58,7 +55,7 @@
               {{
                 $t("game.brewery.breweryProcessor.gain.detailMessage", {
                   outputQuantity: outputResources[0].quantity,
-                  outputResource: outputResources[0].name
+                  outputResource: outputResources[0].resource.name
                 })
               }}
             </li>
@@ -68,7 +65,7 @@
         <div class="field is-grouped">
           <p class="control">
             <button
-              v-if="!inProgress && !gainable"
+              v-if="!gainable"
               :disabled="!processable"
               class="button is-info"
               @click="process"
@@ -113,7 +110,6 @@ export default {
       progressStep: 10,
       processedAmt: 0,
       totalProcessTime: 1000 * 10,
-      inProgress: false,
       gainable: this.breweryProcessor.gainable,
       output: undefined,
       gained: false
@@ -122,60 +118,42 @@ export default {
   computed: {
     ...fromResources.mapState({ resources: state => state }),
     ...fromStock.mapState({ stock: state => state }),
+    inProgress: function() {
+      return this.progress > 0;
+    },
+    processed: function() {
+      return this.progress === this.maxProgress;
+    },
     processable: function() {
-      return !!(this.progress > 0 || this.inputInStock);
+      return !!(this.inProgress || this.inputInStock);
     },
     inputInStock: function() {
-      let inputInStock = true;
+      let inStock = true;
+      this.inputResources.forEach(inputItem => {
+        inStock = this.hasInputAvailable(inputItem);
+      });
 
-      for (let item in this.inputResources) {
-        if (this.inputResources.hasOwnProperty(item)) {
-          let selectedInputItem = this.inputResources[item];
-          let selectedStockItem = this.stock[selectedInputItem.resource];
-
-          if (!selectedStockItem || selectedStockItem.quantity < selectedInputItem.quantity) {
-            inputInStock = false;
-          }
-        }
-      }
-
-      return inputInStock;
+      return inStock;
     },
     inputResources: function() {
-      const input = this.breweryProcessor.input;
+      const { input } = this.breweryProcessor;
 
-      const inputResources = [];
-
-      input.forEach(item => {
-        let selectedInputResource = this.resources.filter(
-          resource => resource._id === item.resource
-        )[0];
-
-        inputResources.push({
-          name: selectedInputResource.name,
+      return input.map(item => {
+        return {
+          resource: this.resources.find(resource => resource._id === item.resource),
           quantity: item.quantity
-        });
+        };
       });
-
-      return inputResources;
     },
     outputResources: function() {
-      const output = this.breweryProcessor.output;
+      const { output } = this.breweryProcessor;
 
-      const outputResources = [];
-
-      output.forEach(item => {
-        let selectedOutputResource = this.resources.filter(
-          resource => resource._id === item.resource
-        )[0];
-
-        outputResources.push({
-          name: selectedOutputResource.name,
+      return output.map(item => {
+        return {
+          resource: this.resources.find(resource => resource._id === item.resource),
           quantity: item.quantity
-        });
+        };
       });
-
-      return outputResources;
     }
   },
   methods: {
@@ -184,28 +162,25 @@ export default {
     process: function() {
       this.gained = false;
 
-      if (this.progress === 0) {
-        for (let item in this.inputResources) {
-          if (this.inputResources.hasOwnProperty(item)) {
-            let selectedInputItem = this.inputResources[item];
-            this.decreaseStock({
-              stockItemName: selectedInputItem.resource,
-              quantity: selectedInputItem.quantity
-            });
-          }
-        }
+      if (!this.inProgress) {
+        this.inputResources.forEach(item => {
+          this.decreaseStock({
+            item: item.resource._id,
+            quantity: item.quantity
+          });
+        });
       }
 
-      if (this.progress < 100) {
+      if (!this.processed) {
         this.progress += this.progressStep;
       }
 
-      if (this.progress >= 100) {
+      if (this.processed) {
         this.gainable = true;
       }
 
       this.saveProcessingBreweryProcessor({
-        name: this.breweryProcessor.name,
+        id: this.breweryProcessor._id,
         progress: this.progress,
         gainable: this.gainable
       });
@@ -228,29 +203,29 @@ export default {
     },
     gain: function() {
       this.progress = 0;
-      this.output = this.outputResources;
 
       this.gainable = false;
       this.gained = true;
 
-      this.increaseStock({
-        stockItemName: this.output.resource,
-        quantity: this.output.quantity
+      this.outputResources.forEach(item => {
+        this.increaseStock({
+          stockItemName: item.resource._id,
+          quantity: item.quantity
+        });
       });
+
       this.saveProcessingBreweryProcessor({
-        name: this.breweryProcessor.name,
+        id: this.breweryProcessor._id,
         progress: this.progress,
         gainable: this.gainable
       });
     },
     hasInputAvailable: function(input) {
-      let available = false;
+      const { resource, quantity } = input;
 
-      if (this.stock[input.resource] && this.stock[input.resource].quantity >= input.quantity) {
-        available = true;
-      }
-
-      return available;
+      return !!Object.values(this.stock).find(
+        item => item.resource === resource._id && quantity <= item.quantity
+      );
     }
   }
 };

@@ -6,7 +6,7 @@
     <div class="card-content">
       <SubNav :tabs="tabs" />
       <div v-if="!loading" class="content">
-        <router-view @recipeUpdate="setSelectedRecipe" />
+        <router-view :loading="loading" @recipeUpdate="setSelectedRecipe" />
       </div>
       <div v-else class="content">
         <p>Loading ...</p>
@@ -21,7 +21,8 @@ import { fromRecipes } from "@/store/modules/recipes";
 import { fromBeers } from "@/store/modules/beers";
 import { fromPlayer } from "@/store/modules/player";
 import { fromResources } from "@/store/modules/resources";
-import { fromBrewery } from "../../store/modules/brewery";
+import { fromBrewery } from "@/store/modules/brewery";
+import { fromBreweryProcessors } from "@/store/modules/breweryProcessors";
 
 export default {
   name: "Brewery",
@@ -46,6 +47,7 @@ export default {
   async created() {
     await this.loadRecipes();
     await this.loadBeers();
+    await this.loadBreweryProcessors();
     this.loading = false;
   },
   methods: {
@@ -53,7 +55,8 @@ export default {
     ...fromBeers.mapActions(["loadBeers"]),
     ...fromPlayer.mapActions(["loadPlayer"]),
     ...fromResources.mapActions(["loadResources"]),
-    ...fromBrewery.mapActions(["setSelectedRecipe"])
+    ...fromBrewery.mapActions(["setSelectedRecipe"]),
+    ...fromBreweryProcessors.mapActions(["loadBreweryProcessors"])
   }
 };
 </script>
