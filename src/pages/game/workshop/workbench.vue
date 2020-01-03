@@ -38,7 +38,7 @@
               <p class="card-header-title">Output</p>
             </div>
             <div class="card-content">
-              <div class="columns">
+              <div class="columns is-multiline">
                 <div
                   class="column is-full"
                   v-for="(transmutation, transmutationIndex) in availableTransmutations"
@@ -46,7 +46,7 @@
                 >
                   <available-transmutation @production="produce" :transmutation="transmutation" />
                 </div>
-                <div class="column is-full">
+                <div v-show="!hasAvailableTransmutations" class="column is-full">
                   <div class="tile box">
                     <div class="container">
                       <div class="columns is-vcentered">
@@ -102,6 +102,9 @@ export default {
             )
         )
       );
+    },
+    hasAvailableTransmutations() {
+      return !!this.availableTransmutations.length;
     }
   },
   methods: {

@@ -10,7 +10,7 @@ const mutations = {
 const actions = {
   loadLanguage: async function({ commit, state, dispatch }, language) {
     if (!state[language]) {
-      const response = await this._vm.$axiosUnauthenticated.get(`/api/translation/${language}`);
+      const response = await this._vm.$axiosUnauthenticated.get(`/translation/${language}`);
       const { translation } = response.data;
       await commit("setLanguage", translation);
       dispatch("setLanguage", language);

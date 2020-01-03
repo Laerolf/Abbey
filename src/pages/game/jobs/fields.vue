@@ -1,23 +1,23 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Fields</p>
+      <p class="card-header-title">{{ $t("game.jobs.fields.title") }}</p>
     </div>
     <div class="card-content">
       <div v-if="!loading" class="content">
         <div v-if="fields.length > 0">
-          <p v-if="fieldMonks < 1">There are {{ fieldMonks }} monks working here.<br /></p>
+          <p v-if="fieldMonks < 1">{{ $t("game.jobs.fields.noWorkingMonkMessage") }}</p>
 
           <p v-if="fieldMonks >= 1">
-            There are {{ fieldMonks }} monks working here.<br />
-            This results in a {{ monkBonus | percentize }} bonus.
+            {{ $t("game.jobs.fields.workingMonkMessage", { monkAmount: fieldMonks }) }}<br />
+            {{ $t("game.jobs.fields.monkBonusMessage", { monkBonus: monkBonus | percentize }) }}
           </p>
 
           <field v-for="(field, index) in fields" :key="`field-${index}`" :field="field" />
         </div>
 
         <div v-if="fields.length === 0">
-          <p class="card-text">You don't have any fields yet.</p>
+          <p class="card-text">{{ $t("game.jobs.fields.noFieldsMessage") }}</p>
         </div>
 
         <button
@@ -26,7 +26,8 @@
           class="button is-success"
           @click="buyNewField"
         >
-          Buy field <font-awesome-icon icon="stop-circle" class="text-gold" />{{ fieldPrice }}
+          {{ $t("game.jobs.fields.buyFieldButton") }}
+          <font-awesome-icon icon="stop-circle" class="text-gold" />{{ fieldPrice }}
         </button>
       </div>
 

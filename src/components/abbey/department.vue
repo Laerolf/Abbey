@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h5 class="title is-5">{{ department.name | capitalize }}</h5>
+    <h5 class="title is-5">{{ $t(`game.abbey.departments.${department.name}`) | capitalize }}</h5>
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label">Amount of monks</label>
+        <label class="label">{{ $t("game.abbey.department.monkAmount") }}</label>
       </div>
       <div class="field-body">
         <div class="field">

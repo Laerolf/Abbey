@@ -6,9 +6,7 @@
     aria-label="main navigation"
   >
     <div class="navbar-brand">
-      <a class="navbar-item">
-        <h4 class="title is-4">Abbey</h4>
-      </a>
+      <h4 class="navbar-item title is-4">{{ $t("game.general.name") }}</h4>
     </div>
   </nav>
 </template>

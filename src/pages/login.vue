@@ -5,14 +5,14 @@
         <div class="card">
           <div class="card-header">
             <p class="card-header-title">
-              Login
+              {{ $t("login.title") }}
             </p>
           </div>
           <div class="card-content">
             <div class="content">
               <form @submit.prevent="login" autocomplete="off">
                 <div class="field">
-                  <label class="label">Username</label>
+                  <label class="label">{{ $t("login.username") }}</label>
                   <div class="control">
                     <input
                       v-model="username"
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="field">
-                  <label class="label">Password</label>
+                  <label class="label">{{ $t("login.password") }}</label>
                   <div class="control">
                     <input
                       v-model="password"
@@ -45,7 +45,7 @@
                     type="submit"
                     abbey-token="abbey-register-register"
                   >
-                    Login
+                    {{ $t("login.actions.loginButton") }}
                   </button>
                 </div>
               </form>
@@ -53,7 +53,7 @@
           </div>
           <footer class="card-footer">
             <router-link class="card-footer-item is-link" to="/register" tag="a">
-              Register
+              {{ $t("login.actions.registerButton") }}
             </router-link>
           </footer>
         </div>

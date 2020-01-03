@@ -47,6 +47,7 @@ export default {
       "November",
       "December"
     ];
+    console.log(value);
     return `${monthsOfTheYear[value.month - 1]} ${value.year}`;
   }),
   formatDateDayNameMonthYear: Vue.filter("formatDateDayNameMonthYear", function(value) {

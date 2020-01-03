@@ -11,12 +11,12 @@
         <div class="field is-grouped">
           <p class="control">
             <button class="button is-danger" @click="setAction('buy')">
-              Buy
+              {{ $t("game.marketplace.vendor.actions.buyButton") }}
             </button>
           </p>
           <p class="control">
             <button class="button is-success" @click="setAction('sell')">
-              Sell
+              {{ $t("game.marketplace.vendor.actions.sellButton") }}
             </button>
           </p>
         </div>
@@ -29,7 +29,9 @@
 
           <div v-if="hasStock" class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label">I would like to sell</label>
+              <label class="label">{{
+                $t("game.marketplace.vendor.actions.sell.resourceMessage")
+              }}</label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -63,7 +65,7 @@
 
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label>I would like to sell</label>
+                <label>{{ $t("game.marketplace.vendor.actions.sell.amountMessage") }}</label>
               </div>
               <div class="field-body">
                 <div class="field">
@@ -89,13 +91,13 @@
 
               <div v-if="itemSellQuantity" class="field is-grouped">
                 <p class="control">
-                  <button class="btn btn-success" @click="acceptDeal">
-                    Accept
+                  <button class="button is-success" @click="acceptDeal">
+                    {{ $t("game.marketplace.vendor.actions.sell.acceptDeal") }}
                   </button>
                 </p>
                 <p class="control">
-                  <button class="btn btn-danger" @click="declineDeal">
-                    Decline
+                  <button class="button is-danger" @click="declineDeal">
+                    {{ $t("game.marketplace.vendor.actions.sell.declineDeal") }}
                   </button>
                 </p>
               </div>
@@ -106,7 +108,9 @@
         <div v-if="action === 'buy'">
           <div class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label">I would like to buy</label>
+              <label class="label">{{
+                $t("game.marketplace.vendor.actions.buy.resourceMessage")
+              }}</label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -134,7 +138,9 @@
 
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">I would like to buy</label>
+                <label class="label">{{
+                  $t("game.marketplace.vendor.actions.buy.amountMessage")
+                }}</label>
               </div>
               <div class="field-body">
                 <div class="field">
@@ -161,12 +167,12 @@
               <div v-if="itemBuyQuantity" class="field is-grouped">
                 <p class="control">
                   <button class="button is-success" @click="acceptDeal">
-                    Accept
+                    {{ $t("game.marketplace.vendor.actions.buy.acceptDealButton") }}
                   </button>
                 </p>
                 <p class="control">
                   <button class="button is-danger" @click="declineDeal">
-                    Decline
+                    {{ $t("game.marketplace.vendor.actions.buy.declineDealButton") }}
                   </button>
                 </p>
               </div>
@@ -202,6 +208,9 @@ export default {
     }),
     ...fromResources.mapState({
       resources: state => state
+    }),
+    ...fromPlayer.mapState({
+      goldenCoins: state => state.goldenCoins
     }),
     hasStock() {
       return Object.values(this.stock).length;
@@ -265,24 +274,28 @@ export default {
     ...fromStock.mapActions(["decreaseStock", "increaseStock"]),
     acceptDeal: function() {
       if (this.action === "sell") {
-        this.decreaseStock({
-          item: this.resourceToSell.resource,
-          quantity: this.itemSellQuantity
-        });
-
-        this.increaseGoldenCoins({ amount: this.salesPrice });
-
-        if (this.resourceToSell.category === "beer") {
-          this.increaseReputation({
-            amount: this.vendor.reputationGiven * this.itemSellQuantity
+        if (this.itemSellQuantity <= this.resourceToSell.quantity) {
+          this.decreaseStock({
+            item: this.resourceToSell.resource,
+            quantity: this.itemSellQuantity
           });
+
+          this.increaseGoldenCoins({ amount: this.salesPrice });
+
+          if (this.resourceToSell.category === "beer") {
+            this.increaseReputation({
+              amount: this.vendor.reputationGiven * this.itemSellQuantity
+            });
+          }
         }
       } else {
-        this.increaseStock({
-          stockItemName: this.itemToBuy,
-          quantity: this.itemBuyQuantity
-        });
-        this.decreaseGoldenCoins({ amount: this.purchasePrice });
+        if (this.goldenCoins >= this.purchasePrice) {
+          this.increaseStock({
+            stockItemName: this.itemToBuy,
+            quantity: this.itemBuyQuantity
+          });
+          this.decreaseGoldenCoins({ amount: this.purchasePrice });
+        }
       }
       this.$emit("close");
     },
@@ -303,5 +316,9 @@ export default {
 
 .input-group > button:last-child {
   margin-right: 0;
+}
+
+.field-input {
+  width: 10em;
 }
 </style>

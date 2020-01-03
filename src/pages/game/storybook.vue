@@ -1,67 +1,76 @@
 <template>
   <div class="card">
     <header class="card-header">
-      <p class="card-header-title">Storybook</p>
+      <p class="card-header-title">{{ $t("game.storybook.title") }}</p>
     </header>
     <div class="card-content">
       <div v-if="!loading" class="content">
-        <div>
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(1)}`)" />
+        <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(1)}`)" />
 
-          <button
-            :disabled="!!boughtBeer"
-            :class="{ active: boughtBeer === true }"
-            class="button is-success"
-            @click="setAnswer('boughtBeer', true)"
-          >
-            Buy a beer
-          </button>
-
-          <button
-            :disabled="!!boughtBeer"
-            :class="{ active: boughtBeer === false }"
-            class="button is-danger"
-            @click="setAnswer('boughtBeer', false)"
-          >
-            Don't give a beer
-          </button>
+        <div class="field is-grouped">
+          <p class="control">
+            <button
+              :disabled="!!boughtBeer"
+              :class="{ active: boughtBeer === true }"
+              class="button is-success"
+              @click="setAnswer('boughtBeer', true)"
+            >
+              {{ $t("game.storybook.actions.buyBeerButton") }}
+            </button>
+          </p>
+          <p class="control">
+            <button
+              :disabled="!!boughtBeer"
+              :class="{ active: boughtBeer === false }"
+              class="button is-danger"
+              @click="setAnswer('boughtBeer', false)"
+            >
+              {{ $t("game.storybook.actions.noBuyBeerButton") }}
+            </button>
+          </p>
         </div>
 
         <div v-if="!!boughtBeer">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(2)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(2)}`)" />
 
-          <button
-            :disabled="!!listenedToStory"
-            :class="{ active: listenedToStory === true }"
-            class="button is-success"
-            @click="setAnswer('listenedToStory', true)"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="!!listenedToStory"
-            :class="{ active: listenedToStory === false }"
-            class="button is-danger"
-            @click="setAnswer('listenedToStory', false)"
-          >
-            No
-          </button>
+          <div class="field is-grouped">
+            <p class="control">
+              <button
+                :disabled="!!listenedToStory"
+                :class="{ active: listenedToStory === true }"
+                class="button is-success"
+                @click="setAnswer('listenedToStory', true)"
+              >
+                {{ $t("game.storybook.actions.listenToStoryButton") }}
+              </button>
+            </p>
+            <p class="control">
+              <button
+                :disabled="!!listenedToStory"
+                :class="{ active: listenedToStory === false }"
+                class="button is-danger"
+                @click="setAnswer('listenedToStory', false)"
+              >
+                {{ $t("game.storybook.actions.noListenToStoryButton") }}
+              </button>
+            </p>
+          </div>
         </div>
 
         <div v-if="!!listenedToStory">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(3)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(3)}`)" />
         </div>
 
         <div v-if="!!listenedToStory">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(4)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(4)}`)" />
 
           <form @submit.prevent="setAnswer('playerName', newPlayerName)">
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">My name is</label>
+                <label class="label">{{ $t("game.storybook.nameFieldLabel") }}</label>
               </div>
               <div class="field-body">
-                <div class="field">
+                <div class="field has-addons">
                   <p class="control">
                     <input
                       id="abbey-storybook-name"
@@ -72,14 +81,15 @@
                       required
                     />
                   </p>
+                  <div class="control">
+                    <button :disabled="hasPlayerName" class="button" type="submit">
+                      <span class="icon is-small">
+                        <font-awesome-icon icon="check" class="has-text-success" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              <button :disabled="hasPlayerName" class="button" type="submit">
-                <span class="icon is-small">
-                  <font-awesome-icon icon="check" class="has-text-success" />
-                </span>
-              </button>
             </div>
           </form>
         </div>
@@ -87,41 +97,47 @@
         <div v-if="hasPlayerName">
           <p
             v-html="
-              $t(`storyChapters.${getStoryChapterByChapterNumber(5)}`, {
-                randomFact: randomFact,
+              $t(`game.story.storyChapters.${getStoryChapterByChapterNumber(5)}`, {
+                randomFact: $t(`game.story.${randomFact}`),
                 playerName: playerName
               })
             "
           />
 
-          <button
-            :disabled="gender"
-            :class="{ active: gender === 'male' }"
-            class="button is-info"
-            @click="setAnswer('gender', 'male')"
-          >
-            Boy
-          </button>
-          <button
-            :disabled="gender"
-            :class="{ active: gender === 'female' }"
-            class="button is-info"
-            @click="setAnswer('gender', 'female')"
-          >
-            Girl
-          </button>
+          <div class="field is-grouped">
+            <p class="control">
+              <button
+                :disabled="gender"
+                :class="{ active: gender === 'male' }"
+                class="button is-info"
+                @click="setAnswer('gender', 'male')"
+              >
+                {{ $t("game.storybook.actions.genderMaleButton") }}
+              </button>
+            </p>
+            <p class="control">
+              <button
+                :disabled="gender"
+                :class="{ active: gender === 'female' }"
+                class="button is-info"
+                @click="setAnswer('gender', 'female')"
+              >
+                {{ $t("game.storybook.actions.genderFemaleButton") }}
+              </button>
+            </p>
+          </div>
         </div>
 
         <div v-if="!!gender">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(6)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(6)}`)" />
 
           <form @submit.prevent="setAnswer('placeName', newPlaceName)">
             <div class="field is-horizontal">
               <div class="field-label is-normal">
-                <label class="label">I would like to be in</label>
+                <label class="label">{{ $t("game.storybook.placeFieldLabel") }}</label>
               </div>
               <div class="field-body">
-                <div class="field">
+                <div class="field has-addons">
                   <p class="control">
                     <input
                       :disabled="hasPlaceName"
@@ -131,29 +147,30 @@
                       required
                     />
                   </p>
+                  <div class="control">
+                    <button :disabled="hasPlaceName" class="button" type="submit">
+                      <span class="icon is-small">
+                        <font-awesome-icon icon="check" class="has-text-success" />
+                      </span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <button :disabled="hasPlaceName" class="button" type="submit">
-              <span class="icon is-small">
-                <font-awesome-icon icon="check" class="has-text-success" />
-              </span>
-            </button>
           </form>
         </div>
 
         <div v-if="hasPlaceName">
           <p
             v-html="
-              $t(`storyChapters.${getStoryChapterByChapterNumber(7)}`, {
+              $t(`game.story.storyChapters.${getStoryChapterByChapterNumber(7)}`, {
                 placeName: placeName,
                 fatherName: fatherName,
                 daugtherSon: getDaughterOrSon,
                 sheHe: getSheOrHe,
                 herHis: getHerOrHis,
                 girlBoy: getGirlOrBoy,
-                abbotName: abbotName
+                abbotName: $t(`game.story.${abbotName}`)
               })
             "
           />
@@ -162,7 +179,7 @@
         <div v-if="hasPlaceName">
           <p
             v-html="
-              $t(`storyChapters.${getStoryChapterByChapterNumber(8)}`, {
+              $t(`game.story.storyChapters.${getStoryChapterByChapterNumber(8)}`, {
                 placeName: placeName,
                 fatherName: fatherName,
                 daugtherSon: getDaughterOrSon
@@ -172,38 +189,45 @@
         </div>
 
         <div v-if="hasPlaceName">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
-          <button
-            :disabled="likeStory !== null && likeStory !== undefined"
-            :class="{ active: likeStory === true }"
-            class="button is-success"
-            @click="setAnswer('likeStory', true)"
-          >
-            Yes
-          </button>
-          <button
-            :disabled="likeStory !== null && likeStory !== undefined"
-            :class="{ active: likeStory === false }"
-            class="button is-danger"
-            @click="setAnswer('likeStory', false)"
-          >
-            No
-          </button>
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
+
+          <div class="field is-grouped">
+            <p class="control">
+              <button
+                :disabled="likeStory !== null && likeStory !== undefined"
+                :class="{ active: likeStory === true }"
+                class="button is-success"
+                @click="setAnswer('likeStory', true)"
+              >
+                {{ $t("game.storybook.actions.likeStoryButton") }}
+              </button>
+            </p>
+            <p class="control">
+              <button
+                :disabled="likeStory !== null && likeStory !== undefined"
+                :class="{ active: likeStory === false }"
+                class="button is-danger"
+                @click="setAnswer('likeStory', false)"
+              >
+                {{ $t("game.storybook.actions.noLikeStoryButton") }}
+              </button>
+            </p>
+          </div>
 
           <div v-if="likeStory !== null && likeStory !== undefined">
-            <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
+            <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(9)}`)" />
           </div>
         </div>
 
         <div v-if="likeStory !== null && likeStory !== undefined">
-          <p v-html="$t(`storyChapters.${getStoryChapterByChapterNumber(10)}`)" />
+          <p v-html="$t(`game.story.storyChapters.${getStoryChapterByChapterNumber(10)}`)" />
 
           <button
             :disabled="completedStory"
             class="button is-info"
             @click="setStoryCompleted(true)"
           >
-            Bye!
+            {{ $t("game.storybook.actions.endStoryButton") }}
           </button>
         </div>
       </div>
@@ -216,7 +240,6 @@
 <script>
 import { fromStory } from "@/store/modules/story";
 import { fromPlayer } from "@/store/modules/player";
-import { fromTranslations } from "../../store/modules/translations";
 
 export default {
   name: "Storybook",
@@ -230,7 +253,6 @@ export default {
     };
   },
   computed: {
-    ...fromTranslations.mapState(["en"]),
     ...fromStory.mapState([
       "storyAnswers",
       "completeStory",

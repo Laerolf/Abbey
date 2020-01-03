@@ -6,28 +6,22 @@
     aria-label="main navigation"
   >
     <div class="navbar-brand">
-      <a class="navbar-item">
-        <h4 class="title is-4">Abbey</h4>
-
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false">
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </a>
-      </a>
+      <h4 class="navbar-item title is-4">{{ $t("game.general.name") }}</h4>
     </div>
 
     <div class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <router-link v-if="player.name" to="/game/player" tag="a" class="button is-primary"
-              >Hello {{ player.name }}</router-link
-            >
-            <router-link v-if="!player.name" to="/game/player" tag="a" class="button is-primary"
-              >Hello stranger</router-link
-            >
-            <a class="button is-danger" @click="logout">Log out</a>
+            <router-link v-if="player.name" to="/game/player" tag="a" class="button is-primary">{{
+              $t("game.general.greeting", { name: player.name })
+            }}</router-link>
+            <router-link v-if="!player.name" to="/game/player" tag="a" class="button is-primary">{{
+              $t("game.general.name", { name: $t("game.general.unknownUser") })
+            }}</router-link>
+            <a class="button is-danger" @click="logout">{{
+              $t("game.general.actions.logOutButton")
+            }}</a>
           </div>
         </div>
       </div>

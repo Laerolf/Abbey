@@ -1,15 +1,22 @@
 <template>
   <div :abbey-token="`abbey-facility-content-storage-${facilityName}`" v-show="show" class="box">
-    <h5 class="is-title is-5">Storage</h5>
+    <h5 class="is-title is-5">{{ $t("game.jobs.facility.storage.title") }}</h5>
 
-    <p>Storage level: {{ storageLevel }} / {{ storageCapacity }}</p>
+    <p>
+      {{
+        $t("game.jobs.facility.storage.storageLevel", {
+          storageLevel: storageLevel,
+          storageCapacity: storageCapacity
+        })
+      }}
+    </p>
 
     <ul :abbey-token="`abbey-facility-content-storage-list-${facilityName}`">
       <li
         v-show="!hasItemsInStorage"
         :abbey-token="`abbey-facility-content-storage-list-undefined-${facilityName}`"
       >
-        There is nothing here yet.
+        {{ $t("game.jobs.facility.storage.emptyStorage") }}
       </li>
       <li
         v-for="item in storageItems"

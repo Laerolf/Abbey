@@ -109,6 +109,7 @@ export default {
   },
   async created() {
     await this.loadLanguage("en");
+    await this.loadLanguage("nl");
     await this.$store.dispatch("loadGame");
     await this.loadPlayer();
     await this.loadResources();

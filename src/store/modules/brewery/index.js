@@ -17,8 +17,9 @@ const actions = {
     commit("setSelectedRecipe", recipe);
     dispatch("setSelectedBeer", selectedBeer);
   },
-  setSelectedBeer: function({ commit }, beer) {
+  setSelectedBeer: function({ commit, dispatch }, beer) {
     commit("setSelectedBeer", beer);
+    dispatch("breweryProcessors/setFermentationTankOutput", { beer: beer }, { root: true });
   }
 };
 export default { namespaced: true, mutations: mutations, actions: actions };

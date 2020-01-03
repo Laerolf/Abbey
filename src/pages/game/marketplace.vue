@@ -2,7 +2,7 @@
   <div id="'abbey-marketplace" class="card">
     <div class="card-header">
       <p class="card-header-title">
-        Marketplace
+        {{ $t("game.marketplace.title") }}
       </p>
     </div>
     <div class="card-content">
@@ -25,7 +25,7 @@ export default {
       tabs: [
         {
           to: "/game/marketplace/vendors",
-          name: "Vendors",
+          name: this.$t("game.marketplace.navigation.vendors"),
           icon: "comments"
         }
       ]

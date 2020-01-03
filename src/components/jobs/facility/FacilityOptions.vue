@@ -4,11 +4,11 @@
     v-show="show"
     class="box"
   >
-    <h5 class="title is-5">Options</h5>
+    <h5 class="title is-5">{{ $t("game.jobs.facility.options.title") }}</h5>
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
-        <label class="label">Assigned monks</label>
+        <label class="label">{{ $t("game.jobs.facility.options.assignedMonk") }}</label>
       </div>
       <div class="field-body">
         <div class="field">

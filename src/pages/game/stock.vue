@@ -2,7 +2,7 @@
   <div class="card">
     <header class="card-header">
       <p class="card-header-title">
-        Stock
+        {{ $t("game.stock.title") }}
       </p>
     </header>
     <div class="card-content">
@@ -15,7 +15,7 @@
         />
 
         <p v-if="getStock.length < 1">
-          Nothing in stock.
+          {{ $t("game.stock.emptyStock") }}
         </p>
       </div>
     </div>

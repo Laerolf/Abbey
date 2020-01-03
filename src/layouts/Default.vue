@@ -23,6 +23,7 @@ export default {
   },
   async created() {
     await this.loadLanguage("en");
+    await this.loadLanguage("nl");
   },
   methods: {
     ...fromTranslations.mapActions(["loadLanguage"])

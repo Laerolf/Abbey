@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Vendors</p>
+      <p class="card-header-title">{{ $t("game.marketplace.vendors.title") }}</p>
     </div>
     <div class="card-content">
       <div v-if="!loading" class="content">

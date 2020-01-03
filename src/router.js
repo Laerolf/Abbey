@@ -2,8 +2,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import { $notify } from "@/plugins/notify";
-
 import Default from "@/layouts/Default";
 import Game from "@/layouts/Game";
 
@@ -15,6 +13,7 @@ import Abbey from "@/pages/game/abbey";
 import Jobs from "@/pages/game/jobs";
 import Fields from "@/pages/game/jobs/fields";
 import Facilities from "@/pages/game/jobs/facilities";
+import Processors from "@/pages/game/jobs/processors";
 import Marketplace from "@/pages/game/marketplace";
 import Vendors from "@/pages/game/marketplace/vendors";
 import Brewery from "@/pages/game/brewery";
@@ -24,7 +23,6 @@ import Player from "@/pages/game/player";
 import Storybook from "@/pages/game/storybook";
 import Workshop from "@/pages/game/workshop";
 import Workbench from "@/pages/game/workshop/workbench";
-import Furnace from "@/pages/game/workshop/furnace";
 
 Vue.use(Router);
 
@@ -97,6 +95,11 @@ const router = new Router({
               name: "Facilities",
               path: "facilities",
               component: Facilities
+            },
+            {
+              name: "Processors",
+              path: "processors",
+              component: Processors
             }
           ]
         },
@@ -147,11 +150,6 @@ const router = new Router({
               name: "Workbench",
               path: "workbench",
               component: Workbench
-            },
-            {
-              name: "Furnace",
-              path: "furnace",
-              component: Furnace
             }
           ]
         }

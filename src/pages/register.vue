@@ -5,14 +5,14 @@
         <div class="card">
           <div class="card-header">
             <p class="card-header-title">
-              Register
+              {{ $t("register.title") }}
             </p>
           </div>
           <div class="card-content">
             <div class="content">
               <form @submit.prevent="register" autocomplete="off">
                 <div class="field">
-                  <label class="label">Username</label>
+                  <label class="label">{{ $t("register.username") }}</label>
                   <div class="control">
                     <input
                       v-model="username"
@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="field">
-                  <label class="label">Password</label>
+                  <label class="label">{{ $t("register.password") }}</label>
                   <div class="control">
                     <input
                       v-model="password"
@@ -57,7 +57,7 @@
                     type="submit"
                     abbey-token="abbey-register-register"
                   >
-                    Register
+                    {{ $t("register.actions.registerButton") }}
                   </button>
                 </div>
               </form>
@@ -65,7 +65,7 @@
           </div>
           <footer class="card-footer">
             <router-link class="card-footer-item is-link" to="/login" tag="a">
-              Login
+              {{ $t("register.actions.loginButton") }}
             </router-link>
           </footer>
         </div>
@@ -90,7 +90,7 @@ export default {
         password: this.password
       };
 
-      const response = await this.$axios.post("http://localhost:8000/api/register", registerInfo);
+      const response = await this.$axiosUnauthenticated.post("register", registerInfo);
 
       const { successful, message } = response.data;
 

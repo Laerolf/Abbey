@@ -1,22 +1,26 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Abbey</p>
+      <p class="card-header-title">{{ $t("game.abbey.title") }}</p>
     </div>
     <div class="card-content">
       <div class="content">
-        <p>Here you can manage your monks.</p>
+        <p>{{ $t("game.abbey.description") }}</p>
 
         <ul>
-          <li>Previous chore: {{ previousChore.name }}</li>
-          <li>Current chore: {{ currentChore.name }}</li>
-          <li>Next chore: {{ nextChore.name }}</li>
+          <li>{{ $t("game.abbey.chores.previous", { choreName: previousChore.name }) }}</li>
+          <li>{{ $t("game.abbey.chores.current", { choreName: currentChore.name }) }}</li>
+          <li>{{ $t("game.abbey.chores.next", { choreName: nextChore.name }) }}</li>
         </ul>
 
-        <p>
-          There are currently {{ totalAmtOfMonks }} monks in your abbey.<br />
-          {{ occupiedMonks }} monks are busy.
-        </p>
+        <p
+          v-html="
+            $t('game.abbey.monksCurrentlyWorking', {
+              totalMonksAmount: totalAmtOfMonks,
+              occupiedMonks: occupiedMonks
+            })
+          "
+        />
 
         <department
           v-for="department in departments"

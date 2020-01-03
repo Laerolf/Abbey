@@ -1,25 +1,28 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Book of Recipes</p>
+      <p class="card-header-title">{{ $t("game.brewery.bookOfRecipes.title") }}</p>
     </div>
     <div class="card-content">
       <div class="content">
         <p v-if="hasSelectedRecipe">
-          Currently your brewery is bound to make "{{ selectedBeer.name }}".
+          {{
+            $t("game.brewery.bookOfRecipes.selectedRecipeMessage", {
+              selectedRecipe: selectedBeer.name
+            })
+          }}
         </p>
-        <p v-else>Your brewery doesn't have a recipe to brew.<br />Select one to start brewing.</p>
+        <p v-else v-html="$t('game.brewery.bookOfRecipes.noSelectedRecipeMessage')" />
 
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">Recipes</label>
+            <label class="label">{{ $t("game.brewery.bookOfRecipes.recipes.title") }}</label>
           </div>
           <div class="field-body">
             <div class="field">
               <div class="control">
                 <div class="select">
                   <select v-model="selectedRecipeId">
-                    <option value="undefined">-- Select a recipe --</option>
                     <option v-for="recipe in recipes" :key="recipe._id" :value="recipe._id">
                       {{ recipe.name }}
                     </option>
@@ -37,16 +40,20 @@
 
           <div class="card-content">
             <div class="content">
-              <h5 class="title is-5">Description</h5>
+              <h5 class="title is-5">{{ $t("game.brewery.bookOfRecipes.recipe.description") }}</h5>
 
               <p>{{ selectedBeer.description }}</p>
 
-              <p>
-                Discovered by {{ selectedBeer.discoverer }},
-                {{ selectedBeer.discoverDate | formatBeerDiscoveryDate }}.
-              </p>
+              <p
+                v-html="
+                  $t('game.brewery.bookOfRecipes.recipe.discoveredMessage', {
+                    discoverer: selectedBeer.discoverer,
+                    discoverDate: selectedBeer.discoverDate
+                  })
+                "
+              />
 
-              <h5 class="title is-5">Ingredients</h5>
+              <h5 class="title is-5">{{ $t("game.brewery.bookOfRecipes.recipe.ingredients") }}</h5>
 
               <ul>
                 <li
@@ -57,14 +64,23 @@
                 </li>
               </ul>
 
-              <h5 class="title is-5">Details</h5>
+              <h5 class="title is-5">{{ $t("game.brewery.bookOfRecipes.recipe.details") }}</h5>
 
               <ul>
-                <li>Category: {{ selectedBeer.category }}</li>
                 <li>
-                  Alcohol percentage:
-                  {{ selectedBeer.alcoholLevel | percentize }}
+                  {{
+                    $t("game.brewery.bookOfRecipes.recipe.category", {
+                      category: selectedBeer.category
+                    })
+                  }}
                 </li>
+                <li
+                  v-html="
+                    $t('game.brewery.bookOfRecipes.recipe.alcoholLevel', {
+                      alcoholLevel: selectedBeer.alcoholLevel
+                    })
+                  "
+                />
               </ul>
             </div>
           </div>

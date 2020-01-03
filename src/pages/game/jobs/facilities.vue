@@ -1,12 +1,14 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">Facilities</p>
+      <p class="card-header-title">{{ $t("game.jobs.facilities.title") }}</p>
     </div>
     <div class="card-content">
       <div v-if="!loading" class="content">
-        <p>There are {{ facilityMonks }} monks assigned here.</p>
-        <p>They are currently <span v-if="!hasWorkingChore">not</span> working.</p>
+        <p>{{ $t("game.jobs.facilities.assignedMonkMessage", { monkAmount: facilityMonks }) }}</p>
+
+        <p v-if="hasWorkingChore">{{ $t("game.jobs.facilities.workingMonkMessage") }}</p>
+        <p v-else>{{ $t("game.jobs.facilities.noWorkingMonkMessage") }}</p>
 
         <div v-if="hasFacilities">
           <facility
@@ -17,7 +19,7 @@
           />
         </div>
         <div v-if="!hasFacilities">
-          <p class="card-text">There are no facilities yet.</p>
+          <p class="card-text">{{ $t("game.jobs.facilities.noFacilitiesMessage") }}</p>
         </div>
       </div>
       <div v-else class="content">

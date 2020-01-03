@@ -1,7 +1,7 @@
 <template>
   <aside class="menu">
     <p class="menu-label">
-      Navigation
+      {{ $t("game.navigation.title") }}
     </p>
     <ul class="menu-list">
       <li v-for="(tab, tabIndex) in tabs" :key="tabIndex">
