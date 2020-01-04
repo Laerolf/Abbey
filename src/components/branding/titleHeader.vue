@@ -13,11 +13,8 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <router-link v-if="player.name" to="/game/player" tag="a" class="button is-primary">{{
-              $t("game.general.greeting", { name: player.name })
-            }}</router-link>
-            <router-link v-if="!player.name" to="/game/player" tag="a" class="button is-primary">{{
-              $t("game.general.name", { name: $t("game.general.unknownUser") })
+            <router-link to="/game/player" tag="a" class="button is-primary">{{
+              $t("game.general.greeting", { name: player.name || $t("game.general.unknownUser") })
             }}</router-link>
             <a class="button is-danger" @click="logout">{{
               $t("game.general.actions.logOutButton")

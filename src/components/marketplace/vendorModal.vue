@@ -92,12 +92,12 @@
               <div v-if="itemSellQuantity" class="field is-grouped">
                 <p class="control">
                   <button class="button is-success" @click="acceptDeal">
-                    {{ $t("game.marketplace.vendor.actions.sell.acceptDeal") }}
+                    {{ $t("game.marketplace.vendor.actions.sell.acceptDealButton") }}
                   </button>
                 </p>
                 <p class="control">
                   <button class="button is-danger" @click="declineDeal">
-                    {{ $t("game.marketplace.vendor.actions.sell.declineDeal") }}
+                    {{ $t("game.marketplace.vendor.actions.sell.declineDealButton") }}
                   </button>
                 </p>
               </div>

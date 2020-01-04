@@ -10,6 +10,10 @@ const mutations = {
   setBreweryProcessorOutput: function(state, data) {
     const { beerResourceId, index } = data;
     state[index].output.push({ resource: beerResourceId, quantity: 1 });
+  },
+  clearBreweryProcessorOutput: function(state, data) {
+    const { index } = data;
+    Vue.set(state[index], "output", []);
   }
 };
 const actions = {
@@ -33,6 +37,7 @@ const actions = {
     data.index = state.findIndex(breweryProcessor => breweryProcessor.name === "Fermentation tank");
 
     delete data.beer;
+    commit("clearBreweryProcessorOutput", data);
     commit("setBreweryProcessorOutput", data);
   }
 };
