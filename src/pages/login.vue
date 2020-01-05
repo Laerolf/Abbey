@@ -84,19 +84,20 @@ export default {
       try {
         const response = await this.$axiosUnauthenticated.post("login", loginCredentials);
 
-        const { success, message } = response.data;
+        const { token } = response.data;
 
-        if (success) {
+        if (token) {
+          this.$cookies.set("abbey-session", token);
           this.$notify({
             group: "notifications",
             title: "Success",
-            text: message,
+            text: "Successfully logged in!",
             type: "success"
           });
 
           this.$router.push("game");
         } else {
-          throw message;
+          throw "Something went wrong!";
         }
       } catch (exception) {
         const { message } = exception.response.data;

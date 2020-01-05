@@ -2,6 +2,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 
+import { $axios } from "@/plugins/axios";
+
 import Default from "@/layouts/Default";
 import Game from "@/layouts/Game";
 
@@ -23,8 +25,6 @@ import Player from "@/pages/game/player";
 import Storybook from "@/pages/game/storybook";
 import Workshop from "@/pages/game/workshop";
 import Workbench from "@/pages/game/workshop/workbench";
-
-Vue.use(Router);
 
 const router = new Router({
   mode: "history",
@@ -159,43 +159,33 @@ const router = new Router({
   linkActiveClass: "is-active"
 });
 
-/* Router.beforeEach((to, from, next) => {
-  const toParts = to.path.split('/')
-  const gamePath = 'game'
+router.beforeEach((to, from, next) => {
 
-  let tokenNeeded = false
+  const unrestrictedPages = ['Login', 'Register'];
 
-  if (toParts.indexOf(gamePath) !== -1) {
-    tokenNeeded = true
-  }
+  if (!unrestrictedPages.includes(to.name)) {
 
-  const token = {token: $cookies.get('Token')}
+    if (Vue.$cookies.isKey('abbey-session')) {
 
-  if (tokenNeeded) {
-    axios.post('http://localhost:8000/api/verifyToken', token).then(response => {
-      const authenticated = response.data.data.authenticated
+      const token = Vue.$cookies.get('abbey-session');
+      $axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
-      if (authenticated) {
-        if (!store.getters.getCompletedStory && toParts.indexOf('storybook') == -1) {
-          router.push('/game/storybook')
-        } else {
-          if (store.getters.getCompletedStory && toParts.indexOf('storybook') !== -1) {
-            router.push('/game')
-          } else {
-            next()
-          }
-        }
-      } else {
-        router.push('/')
-      }
-    }).catch(error => {
-      router.push('/')
-    })
+      next();
+    } else {
+
+      Vue.$cookies.remove('abbey-session');
+      delete $axios.defaults.headers.common['Authorization'];
+
+      next('/login');
+    }
+
   } else {
-    next()
+      next();
   }
-})
 
+});
+
+/*
 // COPY MAIN
 
 const token = { token: $cookies.get('Token') }
@@ -264,5 +254,7 @@ new Vue({
 loadGame(token)
 
 */
+
+Vue.use(Router);
 
 export default router;

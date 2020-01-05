@@ -45,7 +45,9 @@ export default {
   },
   methods: {
     async logout() {
-      await this.$axios.post("logout");
+      // await this.$axios.post("logout");
+
+      this.$cookies.remove("abbey-session");
 
       router.push("/login");
     }
