@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <p class="card-header-title">{{ $t("game.abbey.title") }}</p>
+      <p class="card-header-title" abbey-token="game-abbey-title">{{ $t("game.abbey.title") }}</p>
     </div>
     <div class="card-content">
       <div class="content">
@@ -14,6 +14,7 @@
         </ul>
 
         <p
+          abbey-token="game-abbey-monksCurrentlyWorking"
           v-html="
             $t('game.abbey.monksCurrentlyWorking', {
               totalMonksAmount: totalAmtOfMonks,

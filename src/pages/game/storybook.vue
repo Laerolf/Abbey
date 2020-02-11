@@ -71,16 +71,19 @@
               </div>
               <div class="field-body">
                 <div class="field has-addons">
-                  <p class="control">
+                  <div class="control">
                     <input
                       id="abbey-storybook-name"
                       :disabled="hasPlayerName"
                       v-model="playerName"
                       class="input"
+                      :class="{ 'is-danger': $v.playerName.$invalid }"
                       type="text"
-                      required
                     />
-                  </p>
+                    <p v-show="$v.playerName.$invalid" class="help is-danger">
+                      A name is required.
+                    </p>
+                  </div>
                   <div class="control">
                     <button :disabled="hasPlayerName" class="button" type="submit">
                       <span class="icon is-small">
@@ -138,15 +141,18 @@
               </div>
               <div class="field-body">
                 <div class="field has-addons">
-                  <p class="control">
+                  <div class="control">
                     <input
                       :disabled="hasPlaceName"
                       v-model="placeName"
                       class="input"
+                      :class="{ 'is-danger': $v.placeName.$invalid }"
                       type="text"
-                      required
                     />
-                  </p>
+                    <p v-show="$v.placeName.$invalid" class="help is-danger">
+                      A place is required.
+                    </p>
+                  </div>
                   <div class="control">
                     <button :disabled="hasPlaceName" class="button" type="submit">
                       <span class="icon is-small">
@@ -241,6 +247,8 @@
 import { fromStory } from "@/store/modules/story";
 import { fromPlayer } from "@/store/modules/player";
 
+import { required } from "vuelidate/lib/validators";
+
 export default {
   name: "Storybook",
   data() {
@@ -251,6 +259,14 @@ export default {
       newPlaceName: "",
       loading: true
     };
+  },
+  validations: {
+    playerName: {
+      required
+    },
+    placeName: {
+      required
+    }
   },
   computed: {
     ...fromStory.mapState([
@@ -279,7 +295,9 @@ export default {
         return this.hasPlayerName ? this.storyAnswers.playerName : this.newPlayerName;
       },
       set(newPlayerName) {
-        this.newPlayerName = newPlayerName;
+        if (!this.$v.invalid) {
+          this.newPlayerName = newPlayerName;
+        }
       }
     },
     fatherName: {
@@ -308,7 +326,9 @@ export default {
         return this.hasPlaceName ? this.storyAnswers.placeName : this.newPlaceName;
       },
       set(newPlaceName) {
-        this.newPlaceName = newPlaceName;
+        if (!this.$v.invalid) {
+          this.newPlaceName = newPlaceName;
+        }
       }
     },
     likeStory() {

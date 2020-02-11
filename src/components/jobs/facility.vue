@@ -1,26 +1,25 @@
 <template>
-  <div :abbey-token="`abbey-facility-${facility.name}`" class="card">
-    <div class="card-header" :abbey-token="`abbey-facility-header-${facility.name}`">
-      <p class="card-header-title">{{ facility.name | capitalize }}</p>
+  <div :abbey-token="`facility-${facility.name}`" class="card">
+    <div class="card-header">
+      <p class="card-header-title" :abbey-token="`facility-title-${facility.name}`">
+        {{ facility.name | capitalize }}
+      </p>
     </div>
-    <div class="card-content" :abbey-token="`abbey-facility-content-${facility.name}`">
+    <div class="card-content" :abbey-token="`facility-content-${facility.name}`">
       <div class="content">
         <progress
-          :abbey-token="`abbey-facility-content-progress-${facility.name}`"
+          :abbey-token="`facility-content-progress-${facility.name}`"
           :value="progress"
           :min="minProgress"
           :max="maxProgress"
           class="progress is-info"
         />
 
-        <div
-          :abbey-token="`abbey-facility-content-actions-${facility.name}`"
-          class="field is-grouped"
-        >
+        <div class="field is-grouped">
           <div v-show="!collectable && !hasFullStorage && !hasActiveJob" class="control">
             <button
               :disabled="!this.isAutomatic && this.hasFullStorage"
-              :abbey-token="`abbey-facility-content-actions-fetch-${facility.name}`"
+              :abbey-token="`facility-content-actions-fetch-${facility.name}`"
               class="button is-info"
               @click="fetch"
             >
@@ -29,7 +28,7 @@
           </div>
           <div v-show="collectable || !hasEmptyStorage" class="control">
             <button
-              :abbey-token="`abbey-facility-content-actions-collect-${facility.name}`"
+              :abbey-token="`facility-content-actions-collect-${facility.name}`"
               class="button is-success"
               @click="collect"
             >
@@ -38,7 +37,7 @@
           </div>
           <div class="control">
             <button
-              :abbey-token="`abbey-facility-content-actions-options-${facility.name}`"
+              :abbey-token="`facility-content-actions-options-${facility.name}`"
               class="button is-info"
               :class="{ 'is-outlined': showOptions }"
               @click="toggleOptions"
@@ -48,7 +47,7 @@
           </div>
           <div class="control">
             <button
-              :abbey-token="`abbey-facility-content-actions-storage-${facility.name}`"
+              :abbey-token="`facility-content-actions-storage-${facility.name}`"
               class="button is-info"
               :class="{
                 'is-outlined': showStorage,

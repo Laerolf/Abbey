@@ -10,6 +10,7 @@
         <div class="field">
           <p class="control">
             <input
+              :abbey-token="`game-abbey-department-monkAmount-${department.name}`"
               v-model.number.lazy="assignedMonks"
               :max="availableMonks"
               min="0"

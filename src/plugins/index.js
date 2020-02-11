@@ -4,3 +4,4 @@ import "@/plugins/notify";
 import "@/plugins/axios";
 import "@/plugins/fontawesome";
 import "@/plugins/modal";
+import "@/plugins/vuelidate";

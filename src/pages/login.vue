@@ -10,19 +10,21 @@
           </div>
           <div class="card-content">
             <div class="content">
-              <form @submit.prevent="login" autocomplete="off">
+              <form abbey-token="login-form" @submit.prevent="login">
                 <div class="field">
                   <label class="label">{{ $t("login.username") }}</label>
                   <div class="control">
                     <input
                       v-model="username"
-                      name="someUser"
                       class="input is-rounded"
+                      :class="{ 'is-danger': $v.username.$invalid }"
                       type="text"
-                      abbey-token="abbey-login-username"
-                      required
+                      abbey-token="login-form-username"
                     />
                   </div>
+                  <p v-show="$v.username.$invalid" class="help is-danger">
+                    Your username is required.
+                  </p>
                 </div>
 
                 <div class="field">
@@ -30,20 +32,23 @@
                   <div class="control">
                     <input
                       v-model="password"
-                      name="somePass"
                       class="input is-rounded"
+                      :class="{ 'is-danger': $v.password.$invalid }"
                       type="password"
-                      abbey-token="abbey-login-password"
-                      required
+                      abbey-token="login-form-password"
                     />
                   </div>
+                  <p v-show="$v.password.$invalid" class="help is-danger">
+                    Your password is required.
+                  </p>
                 </div>
 
                 <div class="control">
                   <button
                     class="button is-primary"
+                    :disabled="$v.$invalid"
                     type="submit"
-                    abbey-token="abbey-register-register"
+                    abbey-token="login-form-login"
                   >
                     {{ $t("login.actions.loginButton") }}
                   </button>
@@ -52,7 +57,12 @@
             </div>
           </div>
           <footer class="card-footer">
-            <router-link class="card-footer-item is-link" to="/register" tag="a">
+            <router-link
+              abbey-token="login-actions-register"
+              class="card-footer-item is-link"
+              to="/register"
+              tag="a"
+            >
               {{ $t("login.actions.registerButton") }}
             </router-link>
           </footer>
@@ -63,16 +73,23 @@
 </template>
 
 <script>
-import router from "@/router";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "Login",
-  router,
   data() {
     return {
       username: undefined,
       password: undefined
     };
+  },
+  validations: {
+    username: {
+      required
+    },
+    password: {
+      required
+    }
   },
   methods: {
     async login() {
@@ -88,6 +105,7 @@ export default {
 
         if (token) {
           this.$cookies.set("abbey-session", token);
+
           this.$notify({
             group: "notifications",
             title: "Success",
@@ -96,8 +114,6 @@ export default {
           });
 
           this.$router.push("game");
-        } else {
-          throw "Something went wrong!";
         }
       } catch (exception) {
         const { message } = exception.response.data;
@@ -106,7 +122,8 @@ export default {
           group: "notifications",
           title: "Error",
           text: message,
-          type: "error"
+          type: "error",
+          duration: -1
         });
       }
     }

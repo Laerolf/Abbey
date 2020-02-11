@@ -7,5 +7,7 @@ import "@/assets/sass/main.scss";
 import "@/plugins";
 import i18n from "@/plugins/i18n";
 import "@/filters";
+
 Vue.config.productionTip = false;
+
 new Vue({ router, store, i18n, render: h => h(App) }).$mount("#abbey");
